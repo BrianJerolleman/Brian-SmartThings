@@ -19,9 +19,9 @@ definition(
     author: "Brian Jerolleman",
     description: "Turns the siren on after a delay.",
     category: "My Apps",
-    iconUrl: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience.png",
-    iconX2Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png",
-    iconX3Url: "https://s3.amazonaws.com/smartapp-icons/Convenience/Cat-Convenience@2x.png")
+    iconUrl: "https://s3.amazonaws.com/smartapp-icons/SafetyAndSecurity/App-AudioVisualSmokeAlarm.png",
+    iconX2Url: "https://s3.amazonaws.com/smartapp-icons/SafetyAndSecurity/App-AudioVisualSmokeAlarm@2x.png",
+    iconX3Url: "https://s3.amazonaws.com/smartapp-icons/SafetyAndSecurity/App-AudioVisualSmokeAlarm@2x.png")
 
 preferences {
     section("Turn on siren when this is turned on:") {
