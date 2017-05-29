@@ -71,6 +71,7 @@ def startSiren() {
         log.debug "startSiren starting siren"
         theRealSiren.both()
     } else {
+        log.debug "Alarm was cancelled"
         sendPush("Alarm was cancelled")
     }
 }
