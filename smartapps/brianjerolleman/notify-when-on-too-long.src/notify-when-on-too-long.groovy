@@ -55,13 +55,8 @@ def initialize() {
 
     subscribe(monitorSwitch, "switch.on", monitorSwitchOnHandler)
     subscribe(monitorSwitch, "switch.off", monitorSwitchOffHandler)
-    
-    state.secondsLeft = hours * 60 * 60
 
-    if (monitorSwitch.currentState("switch").value == "on") {
-        state.monitorSwitchOn = new Date()
-        runIn(state.secondsLeft, monitorSwitchCheckHandler)
-    }
+    resetTimer()
 }
 
 def monitorSwitchOnHandler(evt) {
@@ -84,22 +79,29 @@ def monitorSwitchCheckHandler(evt) {
     log.debug "monitorSwitchCheckHandler called: $evt"
 
     if (state.secondsLeft < 0) {
-        state.secondsLeft = hours * 60 * 60
+        resetTimer()
+        sendNotification()
+    }
+}
 
-        if (monitorSwitch.currentState("switch").value == "on") {
-            state.monitorSwitchOn = new Date().format("dd/MM/yyyy hh:mm:ss a Z")
-            runIn(state.secondsLeft, monitorSwitchCheckHandler)
-        }
+private resetTimer() {
+    state.secondsLeft = hours * 60 * 60
 
-        def message = "The ${monitorSwitch.displayName} has been on for $hours hours."
-        if (location.contactBookEnabled && recipients) {
-            log.debug "Contact Book enabled!"
-            sendNotificationToContacts(message, recipients)
-        } else {
-            log.debug "Contact Book not enabled"
-            if (phone) {
-                sendSms(phone, message)
-            }
+    if (monitorSwitch.currentState("switch").value == "on") {
+        state.monitorSwitchOn = new Date()
+        runIn(state.secondsLeft, monitorSwitchCheckHandler)
+    }
+}
+
+private sendNotification() {
+    def message = "The ${monitorSwitch.displayName} has been on for $hours hours."
+    if (location.contactBookEnabled && recipients) {
+        log.debug "Contact Book enabled!"
+        sendNotificationToContacts(message, recipients)
+    } else {
+        log.debug "Contact Book not enabled"
+        if (phone) {
+            sendSms(phone, message)
         }
     }
 }
